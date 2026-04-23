@@ -3,7 +3,7 @@ from model import AQIPredictor
 
 app = Flask(__name__)
 
-predictor = AQIPredictor("Air Quality Index.csv")
+predictor = AQIPredictor("aqi.csv")
 
 @app.route("/")
 def home():
