@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AQI Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            margin: 50px auto;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>AQI Prediction</h1>
+
+    <form action="/predict" method="post">
+        {% for feature in feature_names %}
+            <input type="text" name="{{ feature }}" placeholder="{{ feature }}" required>
+        {% endfor %}
+        <br>
+        <button type="submit">Predict AQI</button>
+    </form>
+
+    <!-- ✅ NEW RESULT BLOCK -->
+    {% if aqi %}
+        <div class="result">
+            <p><b>Predicted AQI:</b> {{ aqi }}</p>
+
+            <p><b>Air Quality:</b> 
+                {% if aqi <= 50 %} Good 😊
+                {% elif aqi <= 100 %} Moderate 😐
+                {% else %} Poor 😷
+                {% endif %}
+            </p>
+
+            <p><b>Logistic Class:</b> {{ log_class }}</p>
+            <p><b>KNN Class:</b> {{ knn_class }}</p>
+            <p><b>Cluster Group:</b> {{ cluster }}</p>
+        </div>
+    {% endif %}
+
+    <!-- ERROR BLOCK -->
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
