@@ -19,7 +19,7 @@ class AQIPredictor:
         self.train_models()
 
     def train_models(self):
-        data = pd.read_csv(r"C:\Users\asmit\Downloads\Python\aqi.csv")
+        data = pd.read_csv(r"aqi.csv")
         data = data.dropna()
 
         numeric_data = data.select_dtypes(include=[np.number])
